@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Payment Reports</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'paymentReports' %}">View Payment Reports</a></li>
+                        <li class="breadcrumb-item active">Payment Reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                 <div class="table-main table-responsive">		
+		{% if msg %}
+			<label>{{msg}}</label>
+		{% else %}
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Card Number</th>
+					<th>Owner Name</th>
+					<th>Amount (RS)</th>
+					<th>Date Of Payment</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for item in data %}
+					{% for v in item %}
+					<tr>
+					<td>{{v.customer_id.card_number}}</td>
+					<td>{{v.customer_id.card_owner}}</td>
+					<td>{{v.amount}}</td>
+					<td>{{v.date}}</td>
+					</tr>
+					{% endfor %}
+				{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+		</div>
+	      </div>
+	   </div>
+	 </div>
+	</div>
+{% endblock %}	

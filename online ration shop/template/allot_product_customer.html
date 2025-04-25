@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Allot Product</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewPurchaseRequest' %}">View Purchase Request</a></li>
+                        <li class="breadcrumb-item active">Allot Product</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="table-main table-responsive">
+	
+		{% for v in purchase %}
+			<table class="table">
+				<tr>
+					<td></td>
+					<td><img src="{{v.customer_id.owner_photo.url}}" class="img-resize-user" alt="no pic"/></td>
+				</tr>
+				<tr>
+					<td>Card Owner</td>
+					<td>{{v.customer_id.card_owner}}</td>
+				</tr>
+				<tr>
+					<td>Card Number</td>
+					<td>{{v.customer_id.card_number}}</td>
+				</tr>
+				<tr>
+					<td>House Number</td>
+					<td>{{v.customer_id.house_number}}</td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td>{{v.customer_id.address}}</td>
+				</tr>
+				<tr>
+					<td>District</td>
+					<td>{{v.customer_id.district_id.district_name}}</td>
+				</tr>
+				<tr>
+					<td>Taluk</td>
+					<td>{{v.customer_id.taluk}}</td>
+				</tr>
+				<tr>
+					<td>Ward Number</td>
+					<td>{{v.customer_id.ward_number}}</td>
+				</tr>
+				<tr>
+					<td>Member Count</td>
+					<td>{{v.customer_id.member_count}}</td>
+				</tr>
+				<tr>
+					<td>Adults</td>
+					<td>{{v.customer_id.adults}}</td>
+				</tr>
+				<tr>
+					<td>Children</td>
+					<td>{{v.customer_id.child}}</td>
+				</tr>
+				<tr>
+					<td>Card Category</td>
+					<td>{{v.customer_id.card_category_id.category}}</td>
+				</tr>
+				<tr>
+					<td>Monthly Income</td>
+					<td>{{v.customer_id.monthly_income}}&nbspRS</td>
+				</tr>
+				<tr>
+					<td>Phone</td>
+					<td>{{v.customer_id.phone}}</td>
+				</tr>
+			</table>
+		{% endfor %}
+		</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+		<div class="row">
+		 <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Members</h1>
+                        
+                    </div>
+                </div>
+		</div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                 <div class="table-main table-responsive">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>Name</th>
+				<th>Relationship</th>
+				<th>Date Of Birth</th>
+				<th>Job</th>
+				<th>Income</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for v in members %}
+				<tr>
+				<td>{{v.name}}</td>
+				<td>{{v.relationship}}</td>
+				<td>{{v.dob}}</td>
+				<td>{{v.job}}</td>
+				<td>{{v.income}}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" id="form1" action="{% url 'allotProductForCustomerAction' %}">
+			{% csrf_token %}
+                            {% for v in purchase %}
+				<input type="hidden" name="purchase_id" id="purchase_id" value="{{v.id}}"/>
+				<input type="hidden" name="customer_id" id="customer_id" value="{{v.customer_id_id}}"/>
+			    {% endfor %}
+			   
+			    <div class="mb-3">
+                                <label for="product">Product</label>
+                                <select name="product" id="product" style="color:black" class="form-control">
+					<option value="">--select--</option>
+					{% for p in products %}
+						<option value="{{p.id}}">{{p.product}}</option>
+					{% endfor %}
+				</select>
+			    </div>
+			   <div class="mb-3">
+                                <label for="stock">Stock (KG/L)</label>
+                                <input type="text" name="stock" id="stock" style="color:black" class="form-control" onkeypress="return isNumberKey(event)"/>
+			    </div>
+			    <div class="mb-3">
+                                <button type="button" id="allot" style="width:100px" class="btn hvr-hover">Allot</button><br/><br/>
+			    </div>
+			   <div class="mb-3">
+                                
+						<div id="divallot">
+						</div>
+					
+			    </div>
+				<input type="hidden" id="products" name="products"/>
+			     <div class="mb-3">
+                                <label for="date">Date For Collecting</label>
+                                <input type="date" name="date" id="date" style="color:black" class="form-control" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="time">Time For Collecting</label>
+                                <input type="text" name="time" id="time" style="color:black" class="form-control" required/>
+			    </div>
+			     
+                           <button type="submit" style="width:100px" id="submit" class="btn hvr-hover">Submit</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			   
+			</form>
+             </div>
+        </div>
+    </div>
+		
+				
+
+	<script src="/static/jquery.min.js"></script>
+	
+	<script>
+		function isNumberKey(evt){
+			var charCode=(evt.which) ? evt.which : evt.keyCode;
+			if(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
+		var removeProduct;
+		$(document).ready(function(){
+			$("#time").mdtimepicker();
+
+			var parray=[];
+			var i=1;
+			$("#allot").click(function(){
+				
+				pr=$("#product").val();
+				pname=$("#product option:selected").text();
+				st=$("#stock").val();
+				if(pr != '' && st != ''){
+					j=0;
+					f=0;
+					for(var i=0,len=parray.length;i<len;++i){
+					
+						if(parray[i][j+1] == pr){
+							f=1;
+						}
+					
+					}
+					if(f==0){
+						$.ajax({
+							url:"{% url 'checkShopStock' %}",
+							data:{'pid':pr,'allotted':st},
+							success:function(data){
+								if(data.message == "ok"){
+									parray.push([i,pr,pname,st]);
+									i=i+1;
+									tableCreation();
+								}
+								else if(data.message == "empty"){
+									alert('Product not available');
+								}
+								else{
+									alert('Insufficient Stock');
+								}
+							}
+						});
+						
+					}
+					else{
+						alert('Already Allotted');
+					}
+				}
+				else{
+					alert('You must select product and enter stock')
+				}
+				
+				
+			});
+			function tableCreation(){
+				var html='<table class="table"><thead><tr><th>Product Id</th><th>Product Name</th><th>Stock</th><th></th></tr></thead><tobody>';
+				for(var i=0,len=parray.length;i<len;++i){
+					html+='<tr>';
+					for(var j=0,rowLen=parray[i].length;j<rowLen-1;++j){
+						html+='<td>'+parray[i][j+1]+'</td>';
+						
+					}
+					html+='<td><button type="button" class="btn hvr-hover" style="color:white" value='+parray[i][0]+' onclick="removeProduct(this.value)">Remove</button></td></tr>';
+					
+				}
+				html+='</tbody></table>';
+				$("#divallot").html(html);
+				$("#products").val(parray);
+			}
+			
+			removeProduct=function(val){
+				for(var i=0,len=parray.length;i<len;++i){
+					if(val == parray[i][0])
+					{
+						const index=parray.indexOf(parray[i]);
+						parray.splice(index,1);
+					}
+				}
+				tableCreation();
+			}
+			$("#submit").click(function(e){
+				
+				optcount=$("#product option").length-1;
+					
+				if(parray.length == 0){
+					alert('No product added');
+					e.preventDefault();
+				}
+				
+			});
+			$("#date").change(function(){
+	
+            			$.ajax({
+                			url: "{% url 'checktdate' %}",
+                
+					data: { 'date': $("#date").val() },
+                
+					success: function (data) {
+                    				if(data.status == "not ok"){
+                        				alert("Date selected is less than current date");
+                        				$("#date").val('');
+                    				}
+                			}
+
+            			});
+			});
+
+		
+        
+	});	
+	</script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

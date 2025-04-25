@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Update Stock & Price</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewStock' %}">Stock & price</a></li>
+                        <li class="breadcrumb-item active">Update Stock & Price</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'updateStockAction' %}">
+			{% csrf_token %}
+                            {% for v in data %}
+				<input type="hidden" name="p_id" id="p_id" value="{{v.id}}"/>
+			    <div class="mb-3">
+                                <label for="product">Product</label>
+                                <input type="text" name="product" id="product" style="color:black" class="form-control" value="{{v.product}}" readonly="true"/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="stock">Stock (KG/L)</label>
+                                <input type="text" name="stock" id="stock" value="{{v.stock}}" style="color:black" class="form-control" onkeypress="return isNumberKey(event)" required/>
+			    </div>
+			   
+
+			   <div class="mb-3">
+                                <label for="wprice">White Card Price (RS)</label>
+                                <input type="text" name="wprice" id="wprice" style="color:black" class="form-control" value="{{v.white_price}}" onkeypress="return isNumberKey(event)" required/>
+				
+			    </div>
+
+			   <div class="mb-3">
+                                <label for="bprice">Blue Card Price (RS)</label>
+                                <input type="text" name="bprice" id="bprice" style="color:black" class="form-control" value="{{v.blue_price}}" onkeypress="return isNumberKey(event)" required/>
+				
+			    </div>
+
+			    <div class="mb-3">
+                                <label for="pprice">Pink Card Price (RS)</label>
+                                <input type="text" name="pprice" id="pprice" style="color:black" class="form-control" value="{{v.pink_price}}" onkeypress="return isNumberKey(event)" required/>
+				
+			    </div>
+
+			   <div class="mb-3">
+                                <label for="yprice">Yellow Card Price (RS)</label>
+                                <input type="text" name="yprice" id="yprice" style="color:black" class="form-control" value="{{v.yellow_price}}" onkeypress="return isNumberKey(event)" required/>
+				
+			    </div>
+
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Update</button><br/><br/>
+			   {% endfor%}
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+	
+
+		<script src="/static/jquery.min.js"></script>
+		<script>
+		function isNumberKey(evt){
+			var charCode=(evt.which) ? evt.which : evt.keyCode;
+			if(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
+		</script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

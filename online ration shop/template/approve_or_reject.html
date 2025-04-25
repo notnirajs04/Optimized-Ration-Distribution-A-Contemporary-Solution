@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Customer Details</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewCustomers' %}">Customers</a></li>
+                        <li class="breadcrumb-item active">Customer Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+		{% for v in data %}
+			<table class="table">
+				<tr>
+					<td></td>
+					<td><img src="{{v.owner_photo.url}}" class="img-resize-user" alt="no pic"/></td>
+				</tr>
+				<tr>
+					<td>Card Number</td>
+					<td>{{v.card_number}}</td>
+				</tr>
+				<tr>
+					<td>Card Owner</td>
+					<td>{{v.card_owner}}</td>
+				</tr>
+				<tr>
+					<td>House Number</td>
+					<td>{{v.house_number}}</td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td>{{v.address}}</td>
+				</tr>
+				
+				<tr>
+					<td>District</td>
+					<td>{{v.district_id.district_name}}</td>
+				</tr>
+				<tr>
+					<td>Member Count</td>
+					<td>{{v.member_count}}</td>
+				</tr>
+				<tr>
+					<td>Shop Number</td>
+					<td>{{v.shop_id.shop_number}}</td>
+				</tr>
+				<tr>
+					<td>Card Category</td>
+					<td>{{v.card_category_id.category}}</td>
+				</tr>
+				<tr>
+					<td>Monthly Income</td>
+					<td>{{v.monthly_income}}</td>
+				</tr>
+				<tr>
+					<td>Phone</td>
+					<td>{{v.phone}}</td>
+				</tr>
+				<tr>
+					<td>Username</td>
+					<td>{{v.username}}</td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>{{v.status}}</td>
+				</tr>
+				<tr>
+					<td>
+					{% if v.status == "approved" %}
+						
+						<a class="btn hvr-hover" style="color:white;width:150px" href="{% url 'viewMembers' v.id %}">View members</a>
+						<a class="btn hvr-hover" style="color:white;width:150px" href="{% url 'rejectCustomer' v.id %}">Reject</a>
+					{% elif v.status == "rejected" %}
+						<a class="btn hvr-hover" style="color:white;width:150px" href="{% url 'approveCustomer' v.id %}">Approve</a>
+					{% else %}
+						<a class="btn hvr-hover" style="color:white;width:150px" href="{% url 'approveCustomer' v.id %}">Approve</a>
+						<a class="btn hvr-hover" style="color:white;width:150px" href="{% url 'rejectCustomer' v.id %}">Reject</a>
+					{% endif %}
+					</td>
+					<td></td>
+				</tr>
+			</table>
+		{% endfor %}
+	 </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

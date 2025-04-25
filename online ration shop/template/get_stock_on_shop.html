@@ -1,0 +1,72 @@
+{% load static %}
+<html>
+	<body>
+		<div>
+			<div class="row">
+		 <div class="col-lg-12">
+                    <div class="title-all text-center"></div>
+                        <h1>Shop Details & Stock Details</h1>
+                        
+                    </div>
+                </div>
+		</div>
+			<table class="table">
+				{% for s in shop %}
+				<tr>
+					<td>Shop Number</td>
+					
+					<td>{{s.shop_number}}</td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					
+					<td>{{s.address}}</td>
+				</tr>
+				{% endfor %}
+				{% for t in stime %}
+				<tr>
+					<td>Opening Time</td>
+					
+					<td>{{t.opening_time}}</td>
+				</tr>
+				<tr>
+					<td>Closing Time</td>
+					
+					<td>{{t.closing_time}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		
+		
+		
+		{% if msg %}
+			<label>{{msg}}</label>
+		{% else %}
+		<table class="table">
+			<thead>
+				<tr align="center">
+					<th>Product</th>
+					<th>Stock&nbsp(KG/L)</th>
+					<th>Yellow Price (RS)</th>
+					<th>Pink price (RS)</th>
+					<th>Blue Price (RS)</th>
+					<th>White Price (RS)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for v in data %}
+				   <tr align="center">
+					<td>{{v.product_id__product}}</td>
+					<td>{{v.stock}}</td>
+					<td>{{v.product_id__yellow_price}}</td>
+					<td>{{v.product_id__pink_price}}</td>
+					<td>{{v.product_id__blue_price}}</td>
+					<td>{{v.product_id__white_price}}</td>
+				   </tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+		</div>
+	</body>
+</html>

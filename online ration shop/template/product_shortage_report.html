@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Product Shortage</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Product Shortage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+
+		 <form class="needs-validation" id="form1" onsubmit="return false">
+			
+                           {% if smonth != null and year != null %}
+				
+			    <div class="mb-3">
+                                <label for="month">Month</label>
+                                <select name="month" id="month" style="color:black" class="form-control" required>
+						<option value="{{smonth}}">{{smonth}}</option>
+						{% for v in month %}
+							<option value="{{v}}">{{v}}</option>
+						{% endfor %}
+					</select>
+			    </div>
+			   <div class="mb-3">
+                                <label for="year">Year</label>
+                                <input type="text" name="year" style="color:black" class="form-control" id="year" required/>
+			    </div>
+
+			   {% else %}
+
+			   <div class="mb-3">
+                                <label for="month">Month</label>
+                                <select name="month" id="month" style="color:black" class="form-control" required>
+						<option value="">--select--</option>
+						{% for v in month %}
+							<option value="{{v}}">{{v}}</option>
+						{% endfor %}
+					</select>
+			    </div>
+			   <div class="mb-3">
+                                <label for="year">Year</label>
+                                <input type="text" name="year" style="color:black" class="form-control" id="year" required/>
+			    </div>
+			    {% endif %}
+
+			   <button type="submit" style="width:100px" name="view" id="view" class="btn hvr-hover">View</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+
+		
+	 </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+		<div id="report">
+			
+		</div>
+		
+		</div>
+	      </div>
+	   </div>
+	 </div>
+	</div>
+
+	<script src="/static/jquery.min.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			
+			$("#view").click(function(){
+				month=$("#month").val();
+				year=$("#year").val();
+				if(month!=''&&year!=''){
+					$.ajax({
+					url:"{% url 'getShortageReport' %}",
+					data:{'month':month,'year':year},
+					success:function(data){
+						$("#report").html(data);
+						$("html,#report").animate({ scrollTop:$("#report").prop("scrollHeight")},"slow");
+						
+						}
+					});
+				}
+			});
+			
+		});
+	</script>
+	{% if msg %}
+		<script>
+			alert('{{msg}}');
+		</script>
+	{% endif %}
+	{% if year %}
+		<script>
+			$(document).ready(function(){
+				$("#year").yearpicker({
+					year:{{year}},
+				});
+			});
+			
+		</script>
+	{% else %}
+		<script>
+			$(document).ready(function(){
+				$("#year").yearpicker();
+			});
+			
+		</script>
+	{% endif %}
+{% endblock %}

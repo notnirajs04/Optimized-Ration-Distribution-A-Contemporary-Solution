@@ -1,0 +1,61 @@
+
+		<div>
+		{% if msg %}
+			<label>{{msg}}</label>
+		{% else %}
+		{% for v in data %}
+			<table style="font-size:18px">
+				<tr>
+					<td>Shop Number</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.shop_id.shop_number}}</td>
+				</tr>
+				<tr>
+					<td>Shop Address</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.shop_id.address}}</td>
+				</tr>
+				<tr>
+					<td>Shop Area</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.shop_id.area}}</td>
+				</tr>
+				<tr>
+					<td>District</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.shop_id.district_id.district_name}}</td>
+				</tr>
+				
+				<tr>
+					<td>Month</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.month}}</td>
+				</tr>
+				<tr>
+					<td>Year</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.year}}</td>
+				</tr>
+				<tr>
+					<td>Date Of Request</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.date}}</td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>&nbsp&nbsp</td>
+					<td>{{v.status}}</td>
+				</tr>
+				<tr>
+					{% if v.status == "allotted" or v.status == "paid" %}
+					<td colspan="3" align="center"><a class="btn hvr-hover" style="width:200px;color:white" href="{% url 'allocationDetailsForCustomer' v.id %}">Allocation Details</a></td>
+					{% endif %}
+					<td>&nbsp&nbsp</td>
+					<td></td>
+		
+				</tr>
+			</table>
+		{% endfor %}
+		{% endif %}
+		</div>
+	

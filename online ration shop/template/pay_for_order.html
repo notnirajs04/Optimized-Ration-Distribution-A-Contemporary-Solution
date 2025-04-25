@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Payment</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'requestStatus' %}">Request Box</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'allocationDetailsForCustomer' data.0.purchase_id_id %}">Allocation Details</a></li>
+                        <li class="breadcrumb-item active">Payment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'payForOrderAction' %}">
+			{% csrf_token %}
+                            {% for v in data %}
+			    <input type="hidden" name="allocation_id" id="allocation_id" value="{{v.id}}"/>
+			    <input type="hidden" name="shop_id" id="shop_id" value="{{v.shop_id_id}}"/>
+			    <input type="hidden" name="purchase_id" id="purchase_id" value="{{v.purchase_id_id}}"/>
+			    <div class="mb-3">
+                                <label for="name">Name On Card</label>
+                                <input type="text" name="name" id="name" style="color:black" class="form-control" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="c_c_n">Credit Card Number</label>
+                                <input type="number" name="c_c_n" id="c_c_n" style="color:black" class="form-control" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="cvv">CVV</label>
+                                <input type="number" name="cvv" id="cvv" style="color:black" class="form-control" required/>
+			    </div>
+			     <div class="mb-3">
+                                <label for="amount">Amount (RS)</label>
+                                <input type="text" name="amount" id="amount" readonly="true" style="color:black" class="form-control" value="{{v.total_price}}"/>
+			    </div>
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Pay</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			   {% endfor %}
+			</form>
+             </div>
+        </div>
+    </div>
+	
+				
+				
+		<script src="/static/jquery.min.js"></script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

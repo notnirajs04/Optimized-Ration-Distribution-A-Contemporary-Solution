@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Payment Details</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewPurchaseRequest' %}">View Purchase Request</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'allocationDetails' data.0.purchase_id_id %}">Allocation Details</a></li>
+                        <li class="breadcrumb-item active">Payment Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+		{% for v in data %}
+		<table class="table">
+			<tr>
+				<td>customer</td>
+				<td>{{v.customer_id.username}}</td>
+			</tr>
+			<tr>
+				<td>Card Number</td>
+				<td>{{v.customer_id.card_number}}</td>
+			</tr>
+			<tr>
+				<td>Amount Paid</td>
+				<td>{{v.amount}}&nbspRS</td>
+			</tr>
+			<tr>
+				<td>Transaction Key</td>
+				<td>{{v.transaction_key}}</td>
+			</tr>
+			<tr>
+				<td>Date</td>
+				<td>{{v.date}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<label style="color:red">Warning:Secure Transaction Key</label>
+				</td>
+			</tr>
+		</table>
+		{% endfor %}
+	</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

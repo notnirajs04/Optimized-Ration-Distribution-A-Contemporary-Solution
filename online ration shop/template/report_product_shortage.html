@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Report Product Shortage</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Report Product Shortage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'reportProductShortageAction' %}">
+			{% csrf_token %}
+                            
+			    <div class="mb-3">
+                                <label for="month">Month</label>
+                                <select name="month" id="month" style="color:black" class="form-control" required>
+							<option value="">--select--</option>
+							{% for m in month %}
+								<option value="{{m}}">{{m}}</option>
+							{% endfor %}
+						</select>
+			    </div>
+			    <div class="mb-3">
+                                <label for="year">Year</label>
+                                <input type="text" name="year" id="year" style="color:black" class="form-control" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="product">Product</label>
+                                <select name="product" id="product" style="color:black" class="form-control">
+					<option value="">--select--</option>
+					{% for p in products %}
+						<option value="{{p.id}}">{{p.product}}</option>
+					{% endfor %}
+				</select>
+			    </div>
+			   <div class="mb-3">
+                                <label for="stock">Stock (KG/L)</label>
+                                <input type="text" name="stock" id="stock" style="color:black" class="form-control" onkeypress="return isNumberKey(event)"/>
+			    </div>
+			    <div class="mb-3">
+                                <button type="button" id="allot" style="width:100px" class="btn hvr-hover">Submit</button><br/><br/>
+			    </div>
+			   <div class="mb-3">
+                                
+						<div id="divallot">
+						</div>
+					
+			    </div>
+				<input type="hidden" id="products" name="products"/>
+                           <button type="submit" style="width:100px" id="submit" class="btn hvr-hover">Send</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+	
+		
+
+	<script src="/static/jquery.min.js"></script>
+	
+	<script>
+		function isNumberKey(evt){
+			var charCode=(evt.which) ? evt.which : evt.keyCode;
+			if(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
+		var removeProduct;
+		$(document).ready(function(){
+			$("#year").yearpicker();
+
+			var parray=[];
+			var i=1;
+			$("#allot").click(function(){
+				
+				pr=$("#product").val();
+				pname=$("#product option:selected").text();
+				st=$("#stock").val();
+				if(pr != '' && st != ''){
+					j=0;
+					f=0;
+					for(var i=0,len=parray.length;i<len;++i){
+					
+						if(parray[i][j+1] == pr){
+							f=1;
+						}
+					
+					}
+					if(f==0){
+						
+						parray.push([i,pr,pname,st]);
+						i=i+1;
+						tableCreation();
+								
+						
+					}
+					else{
+						alert('Already Allotted');
+					}
+				}
+				else{
+					alert('You must select product and enter stock')
+				}
+				
+				
+			});
+
+			function tableCreation(){
+				var html='<table class="table"><thead><tr><th>Product Id</th><th>Product Name</th><th>Stock</th><th></th></tr></thead><tobody>';
+				for(var i=0,len=parray.length;i<len;++i){
+					html+='<tr>';
+					for(var j=0,rowLen=parray[i].length;j<rowLen-1;++j){
+						html+='<td>'+parray[i][j+1]+'</td>';
+						
+					}
+					html+='<td><button type="button" class="btn hvr-hover" style="color:white" value='+parray[i][0]+' onclick="removeProduct(this.value)">Remove</button></td></tr>';
+					
+				}
+				html+='</tbody></table>';
+				$("#divallot").html(html);
+				$("#products").val(parray);
+			}
+			
+			removeProduct=function(val){
+				for(var i=0,len=parray.length;i<len;++i){
+					if(val == parray[i][0])
+					{
+						const index=parray.indexOf(parray[i]);
+						parray.splice(index,1);
+					}
+				}
+				tableCreation();
+			}
+			$("#submit").click(function(e){
+				
+				optcount=$("#product option").length-1;
+					
+				if(parray.length == 0){
+					alert('No product added');
+					e.preventDefault();
+				}
+				
+			});
+		});
+	</script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+
+
+{% endblock %}

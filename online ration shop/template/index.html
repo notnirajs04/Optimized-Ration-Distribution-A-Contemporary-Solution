@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+		<div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-center">
+                <img src="/media/slide1.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> Online Ration Shop</strong></h1>
+                            
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="/media/slide2.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> Online Ration Shop</strong></h1>
+                           
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="/media/slide3.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> Online Ration Shop</strong></h1>
+                            
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <!-- End Slider -->
+
+    <!-- Start Categories  -->
+	{% if 'customer_id' not in request.session and 'ration_shop_id' not in request.session and 'admin_id' not in request.session %}
+	
+    <div class="categories-shop">
+	
+        <div class="container">
+	
+		<div class="row">
+		 <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Features</h1>
+                        
+                    </div>
+                </div>
+		</div>
+            <div class="row">
+		
+               
+           	 
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img1.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'login' %}">Check Stock</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img4.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'login' %}">Purchase</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img3.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'login' %}">Credit Card Payment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	{% else %}
+
+	{% if 'customer_id' in request.session %}
+	<div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img7.png" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'addMembers' %}">Add Members</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img1.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewStockOnShop' %}">Check Ration Shop</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img4.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'purchaseRequest' %}">Purchase</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	{% elif 'ration_shop_id' in request.session %}
+
+		<div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img1.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewStockShop' %}">View Stock</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/time.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'scheduleTime' %}">Schedule Opening & Closing Time</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img4.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewPurchaseRequest' %}">View Purchase Request</a>
+                    </div>
+                </div>
+            </div>
+	</div>
+	</div>
+	<div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img9.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'reportProductShortage' %}">Report Product Shortage</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img10.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'shortageRequestStatus' %}">Shortage Request Status</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img11.png" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewAllottedStock' %}">View Allotted Stock</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+
+	{% elif 'admin_id' in request.session %}
+		
+		<div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img14.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'addRationShop' %}">Add Ration Shop</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img13.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'manageRationShop' %}">Ration Shops</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img19.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'allotRationProduct' 0 %}">Allot Ration Product</a>
+                    </div>
+                </div>
+            </div>
+	</div>
+	</div>
+
+	<div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img21.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewStock' %}">View Stock</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img20.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewAllotedRation' %}">View Alloted Stock</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img16.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewCustomers' %}">View Customers</a>
+                    </div>
+                </div>
+            </div>
+	</div>
+	</div>
+
+	<div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img17.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'viewComplaints' %}">View Complaints</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img18.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'paymentReports' %}">View Payment Report</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-home" src="/media/img9.jpg" alt="" />
+                        <a class="btn hvr-hover" href="{% url 'productShortageReport' %}">Product Shortage Report</a>
+                    </div>
+                </div>
+            </div>
+	</div>
+	</div>	
+
+	{% endif %}
+   {% endif %}
+	<script src="/static/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		
+      			window.history.pushState(null, "", window.location.href);        
+      			window.onpopstate = function() {
+          		window.history.pushState(null, "", window.location.href);
+      			};
+  		});
+	</script>
+	{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+	{% endif %}
+{% endblock %}

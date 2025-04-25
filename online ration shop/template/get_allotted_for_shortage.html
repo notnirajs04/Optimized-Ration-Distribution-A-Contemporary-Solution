@@ -1,0 +1,19 @@
+<div>
+	<label><span style="font-weight:bold;font-size:20px">Allocation Id  :  {{data.0.allot_id_id}}</span></label>
+			<table class="table">
+				<thead>
+					<tr align="center">
+					<td>Product</td>
+					<td>Stock&nbsp(KG/L)</td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for v in data %}
+					<tr align="center">
+						<td>{{v.product_id.product}}</td>
+						<td>{{v.stock}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+</div>

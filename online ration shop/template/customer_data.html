@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Forgot Password?</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'login' %}">Login</a></li>
+                        <li class="breadcrumb-item active">Forgot Password?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+	
+		<form class="needs-validation" method="post" action="{% url 'validateCustomerData' %}">
+		{% csrf_token %}
+			<input type="hidden" name="username" id="username" value="{{username}}"/>
+			<div class="mb-3">
+                                <label for="card_number">Card Number</label>
+                                <input type="number" name="card_number" class="form-control" style="color:black" id="card_number" required/>
+			   </div>
+			<div class="mb-3">
+                                <label for="card_owner">Card Owner</label>
+                                <input type="text" name="card_owner" id="card_owner" class="form-control" style="color:black" required/>
+			   </div>
+			<div class="mb-3">
+                                <label for="a_number">Aadhaar Number</label>
+                                <input type="number" name="a_number" id="a_number" class="form-control" style="color:black" pattern="^\d{12}$" required/>
+			   </div>
+			<button type="submit" style="width:100px" class="btn hvr-hover">Submit</button>
+				
+			<hr class="mb-1">
+			
+		</form>
+	       
+	    </div>
+        </div>
+    </div>
+	
+		
+			
+
+
+		<script src="/static/jquery.min.js"></script>
+		{% if msg %}
+			<script>
+				alert('{{msg}}');
+			</script>
+		{% endif %}
+{% endblock %}

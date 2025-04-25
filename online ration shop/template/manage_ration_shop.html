@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Ration Shops</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Ration Shops</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="table-main table-responsive">
+		<button type="button" name="add_shop" class="btn hvr-hover" style="color:white;font-weight:bold" id="add_shop">Add one</button><br/>
+		{% if data %}
+		<table class="table">
+			<thead>
+			<tr>
+				<th>Shop Number</th>
+				
+				<th>District</th>
+				<th>Area</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th></th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for v in data %}
+				<tr>
+					<td>{{v.shop_number}}</td>
+					
+					<td>{{v.district_id.district_name}}</td>
+					<td>{{v.area}}</td>
+					<td>{{v.username}}</td>
+					<td><span id="{{v.id}}" style="display:none">{{v.password}}</span>&nbsp&nbsp<input type="checkbox" id="{{v.shop_number}}" class="passhide" style="display:none" value="{{v.id}}"/><label for="{{v.shop_number}}"><img style="padding-bottom:3px" src="/static/ceye.png" height="25px" width="25px"/></label></td>
+					<td><a class="btn hvr-hover" style="color:white" href="{% url 'updateRationShop' v.id %}">Update</a></td>
+					<td><a class="btn hvr-hover" style="color:white" href="{% url 'deleteRationShop' v.id %}">Delete</a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			
+		</table>
+		{% else %}
+		<div class="text-center">No Data</div>
+		{% endif %}
+		 </div>
+                </div>
+            </div>
+
+       </div>
+    </div>
+
+	<script src="/static/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("#add_shop").click(function(){
+			window.location.href="{% url 'addRationShop' %}";
+		});
+		$(".passhide").click(function(){
+			
+			if($(this).is(':checked')){
+				$("#"+$(this).val()).css("display","inline-block");
+				$(this).closest('tr').find('img').attr('src','/static/oeye.png')
+			}
+			else{
+				$("#"+$(this).val()).css("display","none");
+				$(this).closest('tr').find('img').attr('src','/static/ceye.png')
+			}
+		});
+	});	
+	</script>
+	{% if msg %}
+	<script>
+		alert('{{msg}}')
+	</script>
+	{% endif %}
+	{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

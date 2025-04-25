@@ -1,0 +1,84 @@
+		<div>
+			{% if msg %}
+			<label>{{msg}}</label>
+			{% else %}
+			
+				<table class="table">
+					<thead>
+						<tr align="center">
+							<th>Report Id</th>
+							<th>Date</th>
+							<th>Status</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for v in data %}
+						<tr align="center">
+							
+							<td>{{v.id}}</td>
+							<td>{{v.date}}</td>
+							<td>{{v.status}}{% ifequal v.status 'allotted' %} : ID : {{v.allocation_id_id}}{% endifequal %}</td>
+							<td>
+								<input type="hidden" name="sid" class="sid" value="{{v.id}}"/>
+								<button type="button" class="btn hvr-hover details" style="color:white">Requested Stock</button>
+
+							</td>
+							{% if v.status == 'allotted' or v.status == 'collected' %}
+							<td>
+							
+								<button type="button" class="btn hvr-hover allotted" style="color:white">Allotted Stock</button>
+
+							</td>
+							{% endif %}
+							<td>
+								{% if v.status == "allotted" %}
+									<a class="btn hvr-hover" style="color:white" href="{% url 'updateToCollected' v.id %}">Update Status To Collected</a>
+								{% endif %}
+							</td>
+							
+						</tr>
+						{% endfor %}
+					</tbody>
+					
+					
+				</table>
+			
+		{% endif %}
+		</div>
+		<br/><br/>
+		<div id="prduct"></div>
+		</div>
+		<script>
+			$(document).ready(function(){
+
+			$(".details").click(function(){
+				var trRef=$(this).parent().parent();
+				var sid=$(trRef).find('.sid').val();
+				$.ajax({
+					url:"{% url 'getProductShort' %}",
+					data:{'sid':sid},
+					success:function(data){
+						$("#prduct").html(data);
+						$("html,#prduct").animate({ scrollTop:$("#prduct").prop("scrollHeight")},"slow");
+					}
+				});
+			});
+
+			$(".allotted").click(function(){
+				var trRef=$(this).parent().parent();
+				var sid=$(trRef).find('.sid').val();
+				$.ajax({
+					url:"{% url 'getAllottedForShortage' %}",
+					data:{'sid':sid},
+					success:function(data){
+						$("#prduct").html(data);
+						$("html,#prduct").animate({ scrollTop:$("#prduct").prop("scrollHeight")},"slow");
+					}
+				});
+			});
+		
+			});
+		</script>

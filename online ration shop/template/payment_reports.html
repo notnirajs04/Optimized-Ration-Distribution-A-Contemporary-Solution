@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>View Payment Reports</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">View Payment Reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+		
+		 <form class="needs-validation" id="form1" method="get" action="{% url 'viewReport' %}">
+			
+                           
+				
+			    
+			   <div class="mb-3">
+                                <label for="district">District</label>
+                                <select name="district" id="district" style="color:black" class="form-control" required>
+						<option value="">--select--</option>
+						{% for d in districts %}
+								<option value="{{d.id}}">{{d.district_name}}</option>
+						{% endfor %}
+					</select>
+			    </div>
+			   
+
+			   <div class="mb-3">
+                                <label for="shop">Shop Number</label>
+                                <select name="shop" id="shop" style="color:black" class="form-control" required>
+						<option value="">--select--</option>
+					</select>
+				
+			    </div>
+			     <div class="mb-3">
+                                <label for="month">Month</label>
+                                <select name="month" id="month" style="color:black" class="form-control" required>
+						<option value="">--select--</option>
+						{% for v in month %}
+						<option value="{{v}}">{{v}}</option>
+						{% endfor %}
+					</select>
+				
+			    </div>
+			    <div class="mb-3">
+                                <label for="year">Year</label>
+                                <input type="text" name="year" style="color:black" class="form-control" id="year" required/>
+				
+			    </div>
+			   <button type="submit" style="width:100px" class="btn hvr-hover">View</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+         
+	 </div>
+        </div>
+    </div>
+	
+
+	<script src="/static/jquery.min.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			
+			$("#district").change(function(){
+				district_id=$("#district").val();
+				$.ajax({
+					url:"{% url 'getShop' %}",
+					data:{'district_id':district_id},
+					success:function(data){
+						$('#shop').html(data);
+					}
+				});
+			});
+			$("#year").yearpicker();
+			
+		});
+	</script>
+
+{% endblock %}

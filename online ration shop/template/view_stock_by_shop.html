@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Stock</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Stock</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+		{% if msg %}
+			<label>{{msg}}</label>
+		{% else %}
+		
+			 <table class="table">
+                            <thead>
+                                <tr>
+                                   <th>Product</th>
+				   <th>Stock</th>
+				   <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+				{% for v in data %}
+                                <tr>
+					<td>{{v.product_id.product}}</td>
+					<td>{{v.stock}}</td>
+					<td>KG/L</td>
+				</tr>
+                                
+				{% endfor %}
+                            </tbody>
+                        </table>
+                 
+		
+		{% endif %}
+		</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

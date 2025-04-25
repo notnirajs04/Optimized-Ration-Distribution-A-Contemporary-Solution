@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Allocation Details</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewPurchaseRequest' %}">View Purchase Request</a></li>
+                        <li class="breadcrumb-item active">Allocation Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="table-main table-responsive">
+		{% for v in data %}
+			<table class="table">
+				<tr>
+					<td></td>
+					<td><img src="{{v.customer_id.owner_photo.url}}" class="img-resize-user" alt="no pic"/></td>
+				</tr>
+				<tr>
+					<td>Card Owner</td>
+					<td>{{v.customer_id.card_owner}}</td>
+				</tr>
+				<tr>
+					<td>Card Number</td>
+					<td>{{v.customer_id.card_number}}</td>
+				</tr>
+				<tr>
+					<td>House Number</td>
+					<td>{{v.customer_id.house_number}}</td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td>{{v.customer_id.address}}</td>
+				</tr>
+				<tr>
+					<td>District</td>
+					<td>{{v.customer_id.district_id.district_name}}</td>
+				</tr>
+				<tr>
+					<td>Member Count</td>
+					<td>{{v.customer_id.member_count}}</td>
+				</tr>
+				<tr>
+					<td>Card Category</td>
+					<td>{{v.customer_id.card_category_id.category}}</td>
+				</tr>
+				<tr>
+					<td>Monthly Income</td>
+					<td>{{v.customer_id.monthly_income}}&nbspRS</td>
+				</tr>
+				{% for p in products %}
+				<tr>
+					<td>{{p.product_id.product}}</td>
+					<td>{{p.stock}}&nbsp(KG/L)</td>
+				</tr>
+				{% endfor %}
+				<tr>
+					<td>Date of allocation</td>
+					<td>{{v.date_of_allocation}}</td>
+				</tr>
+				<tr>
+					<td>Date for collecting</td>
+					<td>{{v.date_for_collecting}}</td>
+				</tr>
+				<tr>
+					<td>Time for collecting</td>
+					<td>{{v.time_for_collecting}}</td>
+				</tr>
+				<tr>
+					<td>Total Price</td>
+					<td>{{v.total_price}}&nbspRS</td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>{{v.purchase_id.status}}</td>
+				</tr>
+				{% if v.purchase_id.status == "paid" %}
+				<tr>
+					<td><a class="btn hvr-hover" style="color:white" href="{% url 'paymentDetailsRationShop' v.id %}">Payment Details</a></td>
+				</tr>
+				{% endif %}
+			</table>
+		{% endfor %}
+		</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

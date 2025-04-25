@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Customers</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Customers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+			{% if data %}
+			<table class="table">
+			<thead>
+			<tr>
+				<th>Card Number</th>
+				<th>Card Owner</th>
+				<th>Member Count</th>
+				<th>Card Category</th>
+				<th>Username</th>
+				<th>Status</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for v in data %}
+				<tr align="center">
+					<td>{{v.card_number}}</td>
+					<td>{{v.card_owner}}</td>
+					<td>{{v.member_count}}</td>
+					<td>{{v.card_category_id.category}}</td>
+					<td>{{v.username}}</td>
+					<td>{{v.status}}</td>
+					<td><a class="btn hvr-hover" style="color:white" href="{% url 'approveOrReject' v.id %}">Details</a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			
+		</table>
+		{% else %}
+			<label>No Registrations</label>
+		{% endif %}
+		</div>
+	      </div>
+	   </div>
+	 </div>
+	</div>
+	
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}	
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+           <div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Update Member</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'addMembers' %}">Add Members</a></li>
+			<li class="breadcrumb-item active">Update Member</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+       <div class="cart-box-main">
+        <div class="container">
+            <div class="center"">                 
+                        <form class="needs-validation" method="post" action="{% url 'updateMemberAction' %}">
+			{% csrf_token %}
+			   {% for v in data %}
+                            <input type="hidden" name="mid" id="mid" value="{{v.id}}"/>
+			    <div class="mb-3">
+                                <label for="member_name">Name</label>
+                                <input type="text" name="member_name" class="form-control" style="color:black" value="{{v.name}}" id="member_name" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="relationship">Relationship</label>
+                                <select name="relationship" id="relationship" class="form-control" style="color:black" required>
+						<option value="{{v.relationship}}">{{v.relationship}}</option>
+						<option value="Owner">Owner</option>
+						<option value="Father">Father</option>
+						<option value="Mother">Mother</option>
+						<option value="Husband">Husband</option>
+						<option value="Wife">Wife</option>
+						<option value="Son">Son</option>
+						<option value="Daughter">Daughter</option>
+						<option value="Grandson">Grandson</option>
+						<option value="Granddaughter">Granddaughter</option>
+						</select>
+			    </div>
+			   <div class="mb-3">
+                                <label for="dob">Date Of Birth</label>
+                                <input type="date" name="dob" id="dob" class="form-control" value="{{v.dob}}" style="color:black" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="job">Job</label>
+                                <input type="text" name="job" id="job" class="form-control" style="color:black" value="{{v.job}}" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="income">Income</label>
+                                <input type="number" name="income" id="income" class="form-control" value="{{v.income}}" style="color:black" required/>
+			    </div>
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Update</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			  {% endfor %}
+			</form>
+             </div>
+        </div>
+    </div>
+	
+				
+		<script src="/static/jquery.min.js"></script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

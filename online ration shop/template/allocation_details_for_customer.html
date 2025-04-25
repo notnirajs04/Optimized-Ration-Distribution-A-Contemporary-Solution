@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Allocation Details</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'requestStatus' %}">Request Box</a></li>
+                        <li class="breadcrumb-item active">Allocation Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+			{% for v in data %}
+                        <table class="table">
+                            <tr>
+					<td>Shop Number</td>
+					<td>{{v.shop_id.shop_number}}</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td>{{v.shop_id.address}}</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td style="font-weight:bold;color:black">Price</td>
+				</tr>
+				{% for p in products %}
+				<tr>
+					<td>{{p.product_id.product}}</td>
+					<td>{{p.stock}}&nbsp(KG/L)</td>
+					<td>{{p.price}}&nbspRS</td>
+				</tr>
+				{% endfor %}
+				<tr style="font-weight:bold;color:black">
+					<td></td>
+					<td>Total Price</td>
+					<td>{{v.total_price}}&nbspRS</td>
+				</tr>
+				<tr>
+					<td>Date of allocation</td>
+					<td>{{v.date_of_allocation}}</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Date for collecting</td>
+					<td>{{v.date_for_collecting}}</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Time for collecting</td>
+					<td>{{v.time_for_collecting}}</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>{{v.purchase_id.status}}</td>
+					<td></td>
+				</tr>
+				<tr>
+					{% if v.purchase_id.status == "paid" %}
+						<td><a class="btn hvr-hover" style="color:white" href="{% url 'paymentDetailsForCustomer' v.id %}">Payment Details</a></td>
+					{% else %}
+						<td>
+						{% if v.total_price != 0 %}
+						<a class="btn hvr-hover" style="color:white;width:100px" href="{% url 'payForOrder' v.id %}">Pay</a>
+						{% endif %}
+						</td>
+					{% endif %}
+					<td></td>
+					<td></td>
+				</tr>
+                        </table>
+			{% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+		
+		
+
+		<script src="/static/jquery.min.js"></script>
+	
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

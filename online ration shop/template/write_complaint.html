@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Write Complaint</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Write Complaint</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'writeComplaintAction' %}">
+			{% csrf_token %}
+                            
+			    <div class="mb-3">
+                                <label for="subject">Subject</label>
+                                <textarea name="subject" id="subject" rows="2" style="color:black" class="form-control" required></textarea>
+			    </div>
+			   <div class="mb-3">
+                                <label for="complaint">Complaint</label>
+                                <textarea name="complaint" id="complaint" rows="4" style="color:black" class="form-control" required></textarea>
+			    </div>
+			   
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Submit</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+	
+
+		<script src="/static/jquery.min.js"></script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

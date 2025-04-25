@@ -1,0 +1,43 @@
+
+		<div>
+		{% if msg %}
+			<label>{{msg}}</label>
+		{% else %}		
+		<table id="tbl" class="table">
+			<thead>
+			<tr>
+				<th>Customer</th>
+				<th>Month</th>
+				<th>Year</th>
+				<th>Date Of Request</th>
+				<th>Status</th>
+				<th></th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for v in data %}
+				<tr>
+					<td>{{v.customer_id.username}}</td>
+					<td>{{v.month}}</td>
+					<td>{{v.year}}</td>
+					<td>{{v.date}}</td>
+					<td>{{v.status}}</td>
+					{% if v.status == "pending" %}
+					<td><a class="btn hvr-hover" style="color:white" href="{% url 'allotProductForCustomer' v.id %}">Allot</a></td>
+					{% else %}
+					<td><a class="btn hvr-hover" style="color:white" href="{% url 'allocationDetails' v.id %}">Allocation Details</a></td>
+					{% endif %}
+					{% if v.status == "paid" %}
+					<td>
+						<a class="btn hvr-hover" style="color:white" href="{% url 'purchaseCollected' v.id %}">Collected</a>
+						
+					</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+		</div>
+

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add Ration Shop</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Add Ration Shop</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'addRationShopAction' %}">
+			{% csrf_token %}
+                            
+			    <div class="mb-3">
+                                <label for="shop_no">Shop Number</label>
+                                <input type="number" name="shop_no" id="shop_no" style="color:black" class="form-control" required/>
+			    </div>
+			<div class="mb-3">
+                                <label for="state">State</label>
+                                <input type="text" id="state" value="Kerala" class="form-control" readonly="true"/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="district">District</label>
+                                <select id="district" name="district" style="color:black" class="form-control" required>
+							<option value="">--select--</option>
+							{% for d in districts %}
+							<option value="{{d.id}}">{{d.district_name}}</option>
+							{% endfor %}
+				    		</select>
+			    </div>
+			    <div class="mb-3">
+                                <label for="area">Area</label>
+                                <input type="text" name="area" id="area" style="color:black" class="form-control" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="address">Address</label>
+                                <textarea name="address" id="address" rows="3" style="color:black" class="form-control" required></textarea>
+			    </div>
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Add</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+		
+
+	<script src="/static/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			
+		});
+	</script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add Members</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Add Members</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'addMembersAction' %}">
+			{% csrf_token %}
+                            
+			    <div class="mb-3">
+                                <label for="member_name">Name</label>
+                                <input type="text" name="member_name" class="form-control" style="color:black" id="member_name" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="relationship">Relationship</label>
+                                <select name="relationship" id="relationship" class="form-control" style="color:black" required>
+						<option value="">--select--</option>
+						<option value="Owner">Owner</option>
+						<option value="Father">Father</option>
+						<option value="Mother">Mother</option>
+						<option value="Husband">Husband</option>
+						<option value="Wife">Wife</option>
+						<option value="Son">Son</option>
+						<option value="Daughter">Daughter</option>
+						<option value="Grandson">Grandson</option>
+						<option value="Granddaughter">Granddaughter</option>
+						</select>
+			    </div>
+			   <div class="mb-3">
+                                <label for="dob">Date Of Birth</label>
+                                <input type="date" name="dob" id="dob" class="form-control" style="color:black" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="job">Job</label>
+                                <input type="text" name="job" id="job" class="form-control" style="color:black" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="income">Income</label>
+                                <input type="number" name="income" id="income" class="form-control" style="color:black" required/>
+			    </div>
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Add</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+		
+    
+
+		<div class="row">
+		 <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Members</h1>
+                        
+                    </div>
+                </div>
+		</div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+	{% if message %}
+		<label>{{message}}</label>
+	{% else %}
+			
+                        <table class="table">
+                            <thead>
+                                <tr>
+				   <th></th>
+                                   <th>Name</th>
+				   <th>Relationship</th>
+				   <th>Date Of Birth</th>
+				   <th>Job</th>
+			           <th>Income</th>
+				   <th></th>
+				   <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+				{% for v in data %}
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="#">
+									<img class="img-fluid" src="images/img-pro-01.jpg" alt="" />
+								</a>
+                                    </td>
+                                   <td>{{v.name}}</td>
+				   <td>{{v.relationship}}</td>
+				   <td>{{v.dob}}</td>
+				   <td>{{v.job}}</td>
+				   <td>{{v.income}}</td>
+				    <td><a class="btn hvr-hover" style="color:white" href="{% url 'updateMember' v.id %}">Update</a></td>
+				    <td><a class="btn hvr-hover" style="color:white" href="{% url 'removeMember' v.id %}">Remove</a></td>
+                                </tr>
+                                
+				{% endfor %}
+                            </tbody>
+                        </table>
+                  
+
+{% endif %}
+	 	
+  </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+		<script src="/static/jquery.min.js"></script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Registration</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Registration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+                
+                
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Create New account</h3>
+                        </div>
+                        <form class="needs-validation" method="post" action="{% url 'signupCustomerAction' %}" id="form1" enctype="multipart/form-data">
+			{% csrf_token %}
+                            <div class="mb-3">
+                                <label for="card_no">Card Number *</label>
+                                <div class="input-group">
+                                   <input type="number" class="form-control" name="card_no" style="color:black" id="card_no" required/>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="owner_name">Card Owner Name *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" style="color:black" name="owner_name" id="owner_name" required/>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileupload">Owner Photo *</label>
+                                <input type="file" class="form-control" name="fileupload" id="fileupload" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="house_no">House Number *</label>
+                                <input type="number" name="house_no" class="form-control" style="color:black" id="house_no" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address">Address *</label>
+                                <textarea name="address" rows="4" class="form-control" style="color:black" id="address" required></textarea>
+			    </div>
+                             <div class="mb-3">
+                                <label for="state">State *</label>
+                                <input type="text" value="Kerala" id="state" class="form-control" readonly="true"/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="district">District *</label>
+                                <select id="district" class="form-control" style="color:black" name="district" required>
+						<option value="">--select--</option>
+						{% for d in districts %}
+							<option value="{{d.id}}">{{d.district_name}}</option>
+						{% endfor %}
+				    	</select>
+			    </div>
+			    <div class="mb-3">
+                                <label for="taluk">Taluk *</label>
+                                <input type="text" name="taluk" class="form-control" style="color:black" id="taluk" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="ward_no">Ward Number *</label>
+                                <input type="number" name="ward_no" class="form-control" style="color:black" id="ward_no" required/>
+			    </div>
+                            <div class="mb-3">
+                                <label for="m_count">Members Count *</label>
+                                <input type="number" name="m_count" id="m_count" style="color:black" class="form-control" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="adults">Adults *</label>
+                                <input type="number" name="adults" id="adults" style="color:black" class="form-control" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="children">Children *</label>
+                                <input type="number" name="children" id="children" style="color:black" class="form-control" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="units">Units *</label>
+                                <input type="number" name="units" id="units" style="color:black" class="form-control" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="shop">Shop Number *</label>
+                                <select id="shop" name="shop" class="form-control" style="color:black" required>
+						<option value="">--select--</option>
+				    	</select>
+			    </div>
+
+			   <div class="mb-3">
+                                <label for="category">Card Category *</label>
+                                <select id="category" class="form-control" name="category" style="color:black" required>
+						<option value="">--select--</option>
+						{% for c in card %}
+							<option value="{{c.id}}">{{c.category}}</option>
+						{% endfor %}
+				    	</select>
+			    </div>
+
+                           
+			    <div class="mb-3">
+                                <label for="income">Monthly Income *</label>
+                                <input type="number" name="income" class="form-control" style="color:black" id="income" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="phone">Phone *</label>
+                                <input type="text" name="phone" id="phone" class="form-control" style="color:black" pattern="^\d{10}$" title="invalid phone number" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="a_number">Aadhaar Number *</label>
+                                <input type="text" name="a_number" class="form-control" id="a_number" style="color:black" pattern="^\d{12}$" title="invalid aadhaar number" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="username">Username *</label>
+                                <input type="text" name="username" class="form-control" id="username" style="color:black" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="password">Password *</label>
+                                <input type="password" name="password" class="form-control" style="color:black" id="password" pattern=".{8,}" title="Eight or more Characters" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="confirm_password">Confirm Password *</label>
+                                <input type="password" name="confirm_password" class="form-control" style="color:black" id="confirm_password" required/>
+			    </div>
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Register</button>
+                            <hr class="mb-1"> </form>
+                    </div>
+                
+            </div>
+           
+
+        </div>
+    </div>
+
+
+		
+				
+			
+
+
+		<script src="/static/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var password=document.getElementById("password");
+			var confirm_password=document.getElementById("confirm_password");
+			function validatePassword(){
+				if(password.value != confirm_password.value){
+					confirm_password.setCustomValidity("Passwords Don't Match");
+				}
+				else{
+					confirm_password.setCustomValidity('');
+				}
+			}
+			password.onchange=validatePassword;
+			confirm_password.onkeyup=validatePassword;			
+
+			
+			$("#district").change(function(){
+				district_id=$("#district").val();
+				$.ajax({
+					url:"{% url 'getShop' %}",
+					data:{'district_id':district_id},
+					success:function(data){
+						$('#shop').html(data);
+					}
+				});
+			});
+
+			
+			$("#form1").submit(function(e){
+				adults=parseInt($("#adults").val());
+				children=parseInt($("#children").val());
+				members=parseInt($("#m_count").val());
+				tot=adults+children;
+				if(tot != members){
+					alert('Members count does not match with sum of adults and children');
+					e.preventDefault();
+				}
+				
+				
+			});
+			$("#username").change(function(){
+				$.ajax({
+							url:"{% url 'checkUsername' %}",
+							data:{'username':$("#username").val()},
+							success:function(data){
+								if(data.status == 'exists' ){
+									alert('Username Already Exists');
+									$("#username").val('');
+								}
+								
+							
+							}
+						});
+			})
+			
+			
+		});
+		
+	</script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

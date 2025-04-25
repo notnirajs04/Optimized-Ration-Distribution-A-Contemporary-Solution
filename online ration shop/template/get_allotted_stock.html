@@ -1,0 +1,65 @@
+
+		<div>
+			{% if msg %}
+		
+			<label>{{msg}}</label>
+			{% else %}
+			
+				<table class="table">
+					<thead>
+						<tr align="center">
+							<th>Allocation Id</th>
+							<th>Date</th>
+							<th>Status</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for v in data %}
+						<tr align="center">
+							
+							<td>{{v.id}}</td>
+							<td>{{v.date}}</td>
+							<td>{{v.status}}</td>
+							<td>
+								<input type="hidden" class="allotid" name="allotid" value="{{v.id}}"/>
+								<button type="button" class="btn hvr-hover view" style="color:white">Allotted Stock</button>
+							</td>
+							<td>
+								{% if v.status == "allotted" %}
+									<a class="btn hvr-hover" style="color:white" href="{% url 'statusToCollected' v.id %}">Update Status To Collected</a>
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+					
+					
+				</table>
+			
+		{% endif %}
+		</div>
+		<br/><br/>
+		<div id="prdct">
+		</div>
+		<script>
+			$(document).ready(function(){
+				
+				$(".view").click(function(){
+					var trRef=$(this).parent().parent();
+					var aid=$(trRef).find('.allotid').val();
+					$.ajax({
+						url:"{% url 'viewAllocation' %}",
+						data:{'allotid':aid},
+						success:function(data){
+							$("#prdct").html(data);
+							$("html,body").animate({ scrollTop:$("#prdct").offset().top-$("#prdct").height()},800);
+						}
+					});
+				});
+			
+			});
+			
+			
+		</script>

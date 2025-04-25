@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>My Account</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">My Account</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+                
+                
+                    <div class="checkout-address">
+                        
+                        <form class="needs-validation" method="post" action="{% url 'updateProfileAction' %}" id="form1" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% for v in data %}
+			   <div class="mb-3">
+                                <div class="input-group">
+                                   <img src="{{v.owner_photo.url}}" class="img-user" alt="no pic"/>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="card_no">Card Number *</label>
+                                <div class="input-group">
+                                   <input type="number" style="color:black" class="form-control" name="card_no" id="card_no" value="{{v.card_number}}" required/>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="owner_name">Card Owner Name *</label>
+                                <div class="input-group">
+                                    <input type="text" style="color:black" class="form-control" name="owner_name" id="owner_name" value="{{v.card_owner}}" required/>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileupload">Owner Photo *</label>
+                                <input type="file" style="color:black" class="form-control" name="fileupload" id="fileupload"/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="house_no">House Number *</label>
+                                <input type="number" style="color:black" name="house_no" class="form-control" id="house_no" value="{{v.house_number}}" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address">Address *</label>
+                                <textarea name="address" id="address" rows="4" style="color:black" class="form-control" required>{{v.address}}</textarea>
+			    </div>
+                             <div class="mb-3">
+                                <label for="state">State *</label>
+                               <input type="text" value="Kerala" id="state" class="form-control" readonly="true"/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="district">District *</label>
+                               <select id="district" name="district" style="color:black" class="form-control" required>
+							<option value="{{v.district_id_id}}">{{v.district_id.district_name}}</option>
+							{% for district in districts %}
+								<option value="{{district.id}}">{{district.district_name}}</option>
+							{% endfor %}
+				    		</select>
+			    </div>
+			    <div class="mb-3">
+                                <label for="taluk">Taluk *</label>
+                                <input type="text" name="taluk" class="form-control" style="color:black" id="taluk" value="{{v.taluk}}" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="ward_no">Ward Number *</label>
+                                <input type="number" name="ward_no" class="form-control" style="color:black" id="ward_no" value="{{v.ward_number}}" required/>
+			    </div>
+                            <div class="mb-3">
+                                <label for="m_count">Members Count *</label>
+                                <input type="number" name="m_count" id="m_count" style="color:black" class="form-control" value="{{v.member_count}}" required/>
+			    </div>
+				<div class="mb-3">
+                                <label for="adults">Adults *</label>
+                                <input type="number" name="adults" id="adults" style="color:black" class="form-control" value="{{v.adults}}" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="children">Children *</label>
+                                <input type="number" name="children" id="children" style="color:black" class="form-control" value="{{v.child}}" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="units">Units *</label>
+                                <input type="number" name="units" id="units" style="color:black" class="form-control" value="{{v.units}}" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="shop">Shop Number *</label>
+                                <select id="shop" name="shop" class="form-control" style="color:black" required>
+							<option value="{{v.shop_id_id}}">{{v.shop_id.shop_number}}</option>
+							{% for shop in shops %}
+								<option value="{{shop.id}}">{{shop.shop_number}}</option>
+							{% endfor %}
+				    		</select>
+			    </div>
+
+			   <div class="mb-3">
+                                <label for="category">Card Category *</label>
+                                <select id="category" name="category" class="form-control" style="color:black" required>
+							<option value="{{v.card_category_id_id}}">{{v.card_category_id.category}}</option>
+							{% for c in card %}
+								<option value="{{c.id}}">{{c.category}}</option>
+							{% endfor %}
+				    		</select>
+			    </div>
+
+                           
+			    <div class="mb-3">
+                                <label for="income">Monthly Income *</label>
+                                <input type="number" name="income" style="color:black" class="form-control" id="income" value="{{v.monthly_income}}" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="phone">Phone *</label>
+                                <input type="text" name="phone" id="phone" style="color:black" class="form-control" pattern="^\d{10}$" value="{{v.phone}}" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="a_number">Aadhaar Number *</label>
+                                <input type="text" name="a_number" class="form-control" style="color:black" id="a_number" value="{{v.aadhaar_number}}" pattern="^\d{12}$" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="username">Username *</label>
+                                <input type="text" name="username" class="form-control" style="color:black" id="username" value="{{v.username}}" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="password">Password *</label>
+                                <input type="password" name="password" class="form-control" style="color:black" id="password" value="{{v.password}}" pattern=".{8,}" title="Eight or more Characters" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="confirm_password">Confirm Password *</label>
+                                <input type="password" name="confirm_password" class="form-control" style="color:black" id="confirm_password" value="{{v.password}}" required/>
+			    </div>
+                           
+			{% endfor %}
+				<button type="submit" style="width:100px" class="btn hvr-hover">Update</button>
+                            <hr class="mb-1"> 
+			</form>
+                    </div>
+                
+            </div>
+           
+
+        </div>
+    </div>
+
+	
+
+	<script src="/static/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var password=document.getElementById("password");
+			var confirm_password=document.getElementById("confirm_password");
+			function validatePassword(){
+				if(password.value != confirm_password.value){
+					confirm_password.setCustomValidity("Passwords Don't Match");
+				}
+				else{
+					confirm_password.setCustomValidity('');
+				}
+			}
+			password.onchange=validatePassword;
+			confirm_password.onkeyup=validatePassword;
+			
+			$("#district").change(function(){
+				district_id=$("#district").val();
+				$.ajax({
+					url:"{% url 'getShop' %}",
+					data:{'district_id':district_id},
+					success:function(data){
+						$('#shop').html(data);
+					}
+				});
+			});
+			
+			$("#form1").submit(function(e){
+				adults=parseInt($("#adults").val());
+				children=parseInt($("#children").val());
+				members=parseInt($("#m_count").val());
+				tot=adults+children;
+				if(tot != members){
+					alert('Members count does not match with sum of adults and children');
+					e.preventDefault();
+				}
+				
+				
+				
+			});
+			$("#username").change(function(){
+				$.ajax({
+							url:"{% url 'checkUsername' %}",
+							data:{'username':$("#username").val()},
+							success:function(data){
+								if(data.status == 'exists' ){
+									alert('Username Already Exists');
+									$("#username").val('')
+									
+								}
+								
+							
+							}
+						});
+			})
+			
+		});
+	</script>
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

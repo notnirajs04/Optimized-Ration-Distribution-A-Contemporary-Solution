@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Schedule time</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Schedule time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'scheduleTimeAction' %}">
+			{% csrf_token %}
+                            {% if stime %}<input type="hidden" name="tid" value="{{stime.0.id}}"/>{% endif %}
+			    <div class="mb-3">
+                                <label for="opening_time">Opening time</label>
+                                <input type="text" id="opening_time" name="opening_time" style="color:black" class="form-control" value="{% if stime %}{{stime.0.opening_time}}{% endif %}" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="closing_time">Closing time</label>
+                                <input type="text" id="closing_time" name="closing_time" style="color:black" class="form-control" value="{% if stime %}{{stime.0.closing_time}}{% endif %}" required/>
+			    </div>
+			   
+                           {% if stime %}<button type="submit" style="width:100px" id="schedule" class="btn hvr-hover" name="sc_time" value="Update">Update</button><br/><br/>{% else %}
+			   	<button type="submit" style="width:100px" id="schedule" class="btn hvr-hover" name="sc_time" value="Submit">Submit</button><br/><br/>{% endif %}
+                            <hr class="mb-1"> 
+			</form>
+			
+
+			
+             </div>
+        </div>
+    </div>
+		
+
+
+	<script src="/static/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(function(){
+			$("#opening_time").mdtimepicker();
+			$("#closing_time").mdtimepicker();
+			$("#schedule").click(function(e){
+				otime=$("#opening_time").val();
+				ctime=$("#closing_time").val();
+				if(otime == ''){
+					alert('Set Opening Time');
+					e.preventDefault();
+				}
+				else if(ctime == ''){
+					alert('Set Closing Time');
+					e.preventDefault();
+				}
+				
+			});
+		ot=$("#opening_time").val();
+		ct=$("#closing_time").val()	
+        $("#opening_time").change(function(){
+	
+            $.ajax({
+                url: "{% url 'checktime' %}",
+                
+		data: { 'time': $("#opening_time").val() },
+                
+		success: function (data) {
+                    if(data.status == "not ok"){
+                        alert("Time selected is less than current time");
+                        $("#opening_time").val(ot);
+                    }
+                }
+
+            });
+        });
+        $("#closing_time").change(function () {
+
+            $.ajax({
+                url: "{% url 'checkendtime' %}",
+                
+		data: { 'stime': $("#opening_time").val(),'etime':$("#closing_time").val()},
+                
+		success: function (data) {
+                    if (data.status == "no stime") {
+                        alert("Please select opening time first");
+                        $("#closing_time").val(ct);
+                    }
+                    else if (data.status == "not ok") {
+                        alert("Selected time is less than opening time");
+                        $("#closing_time").val(ct);
+                    }
+                }
+
+            });
+        });
+
+    });
+		
+		
+	</script>
+	{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+{% endblock %}

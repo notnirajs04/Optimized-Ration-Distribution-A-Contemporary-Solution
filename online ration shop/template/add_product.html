@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add Product</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Add Product</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'addProductAction' %}">
+			{% csrf_token %}
+                            
+			    <div class="mb-3">
+                                <label for="product">Product</label>
+                                <input type="text" name="product" id="product" style="color:black" class="form-control" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="stock">Stock</label>
+                                <input type="text" name="stock" id="stock" style="color:black" class="form-control" onkeypress="return isNumberKey(event)" required/>
+			    </div>
+			   <div class="mb-3">
+                                <label for="white">White Card Price (RS)</label>
+                                <input type="text" name="white" id="white" style="color:black" class="form-control" onkeypress="return isNumberKey(event)" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="blue">Blue Card Price (RS)</label>
+                                <input type="text" name="blue" id="blue" style="color:black" class="form-control" onkeypress="return isNumberKey(event)" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="pink">Pink Card Price (RS)</label>
+                                <input type="text" name="pink" id="pink" style="color:black" class="form-control" onkeypress="return isNumberKey(event)" required/>
+			    </div>
+			    <div class="mb-3">
+                                <label for="yellow">Yellow Card Price (RS)</label>
+                                <input type="text" name="yellow" id="yellow" style="color:black" class="form-control" onkeypress="return isNumberKey(event)" required/>
+			    </div>
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Add</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+	<script src="/static/jquery.min.js"></script>
+	<script>
+		function isNumberKey(evt){
+			var charCode=(evt.which) ? evt.which : evt.keyCode;
+			if(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
+	</script>
+	{% if messages %}
+			{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+			{% endfor %}
+		{% endif %}
+
+{% endblock %}

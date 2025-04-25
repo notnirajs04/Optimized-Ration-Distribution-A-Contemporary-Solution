@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Complaint Details</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewComplaints' %}">Complaints</a></li>
+                        <li class="breadcrumb-item active">Complaint Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+		{% for v in data %}
+			<table class="table">
+				<tr>
+					<td>User</td>
+					<td>{{v.customer_id.username}}</td>
+				</tr>
+				<tr>
+					<td>Subject</td>
+					<td>{{v.subject}}</td>
+				</tr>
+				<tr>
+					<td>Complaint</td>
+					<td>{{v.complaint}}</td>
+				</tr>
+				<tr>
+					<td>Date</td>
+					<td>{{v.date}}</td>
+				</tr>
+			</table>
+		{% endfor %}
+		</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="center"">
+           
+                        
+                        <form class="needs-validation" method="post" action="{% url 'replyAction' %}">
+			{% csrf_token %}
+                            <input type="hidden" name="complaintid" value="{{data.0.id}}"/>
+				<input type="hidden" name="customerid" value="{{data.0.customer_id_id}}"/>
+			    <div class="mb-3">
+                                <label for="subject">Subject</label>
+                                <textarea name="subject" id="subject" rows="2" style="color:black" class="form-control" required></textarea>
+			    </div>
+			   <div class="mb-3">
+                                <label for="reply">Reply</label>
+                                <textarea name="reply" id="reply" rows="4" style="color:black" class="form-control" required></textarea>
+			    </div>
+			   
+                           <button type="submit" style="width:100px" class="btn hvr-hover">Submit</button><br/><br/>
+			   
+                            <hr class="mb-1"> 
+			</form>
+             </div>
+        </div>
+    </div>
+	{% if messages %}
+		{% for message in messages %}
+			<script>
+				alert('{{message}}');
+			</script>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

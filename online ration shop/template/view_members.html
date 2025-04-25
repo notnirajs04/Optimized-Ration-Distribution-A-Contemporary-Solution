@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="all-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Members</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'viewCustomers' %}">Customers</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'approveOrReject' customer %}">Customer Details</a></li>
+                        <li class="breadcrumb-item active">Members</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+		{% if msg %}
+			<label>{{msg}}</label>
+		{% else %}
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Relationship</th>
+					<th>Date Of Birth</th>
+					<th>Job</th>
+					<th>Income</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for v in data %}
+					<tr>
+						<td>{{v.name}}</td>
+						<td>{{v.relationship}}</td>
+						<td>{{v.dob}}</td>
+						<td>{{v.job}}</td>
+						<td>{{v.income}}</td>
+					</tr>
+				{% endfor %}
+				<tbody>
+			</table>
+		{% endif %}
+		</div>
+	      </div>
+	   </div>
+	 </div>
+	</div>
+{% endblock %}
